@@ -2,10 +2,12 @@ $rgname = "tf-AzureLab-tfState-RG"
 $location = "eastus"
 New-AzResourceGroup -Name $rgname -Location $location
 
-$templateFile="azuredeploy.json"
+$templateFile="azuredeploytemplate.json"
+$parameterFile="azuredeployparameters.json"
 $today=Get-Date -Format "MM-dd-yyyy"
 $deploymentName="addstorage-"+"$today"
 New-AzResourceGroupDeployment `
   -Name $deploymentName `
   -ResourceGroupName $rgname `
-  -TemplateFile $templateFile
+  -TemplateFile $templateFile `
+  -TemplateParameterFile $parameterFile

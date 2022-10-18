@@ -1,12 +1,27 @@
 {
   "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
-  "parameters": {},
+  "parameters": {
+    "saname": {
+        "type": "string",
+        "metadata": {
+            "description": "Storage Accoutn Name"
+        },
+        "defaultValue":"azurelabtfstatesa"
+    },
+    "cnname": {
+      "type": "string",
+      "metadata": {
+        "description": "description"
+      },
+      "defaultValue": "azurelabtfstatecn"
+    }
+  },
   "functions": [],
   "variables": {},
   "resources": [
     {
-      "name": "azurelabtfstatesa",
+      "name": "[parameters('saname')]",
       "type": "Microsoft.Storage/storageAccounts",
       "apiVersion": "2019-04-01",
       "location": "[resourceGroup().location]",
@@ -25,7 +40,7 @@
             ],
             "resources": [
                 {
-                "name": "azurelabtfstatecn",
+                "name": "[parameters('cnname')]",
                 "type": "containers",
                 "apiVersion": "2019-04-01",
                 "dependsOn": [
@@ -40,5 +55,10 @@
         ]
     }
   ],
-  "outputs": {}
+  "outputs": {
+    "storageEndpoint": {
+      "type": "object",
+      "value": "[reference(parameters('saname')).primaryEndpoints]"
+    }
+  }
 }
