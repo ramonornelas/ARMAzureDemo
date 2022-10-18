@@ -1,0 +1,44 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {},
+  "functions": [],
+  "variables": {},
+  "resources": [
+    {
+      "name": "azurelabtfstatesa",
+      "type": "Microsoft.Storage/storageAccounts",
+      "apiVersion": "2019-04-01",
+      "location": "[resourceGroup().location]",
+      "sku": {
+        "name": "Standard_LRS",
+        "tier": "Standard"
+      },
+      "kind": "StorageV2",
+      "resources":[    
+        {
+            "name": "default",
+            "type": "blobServices",
+            "apiVersion": "2019-04-01",
+            "dependsOn": [
+                "azurelabtfstatesa"
+            ],
+            "resources": [
+                {
+                "name": "azurelabtfstatecn",
+                "type": "containers",
+                "apiVersion": "2019-04-01",
+                "dependsOn": [
+                    "default"
+                ],
+                "properties": {
+                    "publicAccess": "none"
+                }
+                }
+            ]
+        }
+        ]
+    }
+  ],
+  "outputs": {}
+}
